@@ -1,4 +1,6 @@
-FROM golang:1.16 as build
+FROM golang:1.26.0 AS build
+
+RUN go install github.com/DataDog/orchestrion@v1.8.0
 WORKDIR /go/src/app
 COPY . .
 RUN make

@@ -17,12 +17,13 @@ ifdef IMAGE_NAMESPACE
 IMAGE_PREFIX=${IMAGE_NAMESPACE}/
 endif
 
+
 .PHONY: all
 all: build
 
 .PHONY: build
 build:
-	CGO_ENABLED=0 go build
+	CGO_ENABLED=0 orchestrion go build
 
 .PHONY: image
 image:
