@@ -17,6 +17,11 @@ ifdef IMAGE_NAMESPACE
 IMAGE_PREFIX=${IMAGE_NAMESPACE}/
 endif
 
+DOCKER_BUILD_OPTS ?= --platform linux/amd64,linux/arm64
+
+ifeq ($(DOCKER_PUSH),true)
+DOCKER_BUILD_OPTS += --push
+endif
 
 .PHONY: all
 all: build
@@ -27,8 +32,13 @@ build:
 
 .PHONY: image
 image:
-	docker build --build-arg COLOR=${COLOR} --build-arg ERROR_RATE=${ERROR_RATE} --build-arg LATENCY=${LATENCY} -t $(IMAGE_PREFIX)rollouts-demo:${IMAGE_TAG} .
-	@if [ "$(DOCKER_PUSH)" = "true" ] ; then docker push $(IMAGE_PREFIX)rollouts-demo:$(IMAGE_TAG) ; fi
+	docker buildx build \
+		--platform linux/amd64,linux/arm64 \
+		--build-arg COLOR=${COLOR} \
+		--build-arg ERROR_RATE=${ERROR_RATE} \
+		--build-arg LATENCY=${LATENCY} \
+		${DOCKER_BUILD_OPTS} \
+		-t $(IMAGE_PREFIX)rollouts-demo:${IMAGE_TAG} .
 
 .PHONY: load-tester-image
 load-tester-image:
@@ -46,7 +56,7 @@ lint:
 
 .PHONY: release
 release:
-	./release.sh DOCKER_PUSH=${DOCKER_PUSH} IMAGE_NAMESPACE=${IMAGE_NAMESPACE}
+	./release.sh DOCKER_PUSH=${DOCKER_PUSH} IMAGE_PREFIX=${IMAGE_PREFIX} IMAGE_NAMESPACE=${IMAGE_NAMESPACE}
 
 .PHONY: clean
 clean:
