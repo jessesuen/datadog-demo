@@ -35,7 +35,7 @@ jobs:
           DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest,index
 
         with:
-          images: ghcr.io/${{ github.repository_owner }}/${{ github.repository }}
+          images: ghcr.io/${{ github.repository }}
           tags: |
             type=semver,pattern={{version}}
 
