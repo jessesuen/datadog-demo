@@ -1,4 +1,4 @@
-module github.com/argoproj/rollouts-demo
+module github.com/jessesuen/datadog-demo
 
 go 1.26.0
 

@@ -83,7 +83,7 @@ func main() {
 		Handler: router,
 	}
 	if tls {
-		tlsConfig, err := CreateServerTLSConfig("", "", []string{"localhost", "rollouts-demo"})
+		tlsConfig, err := CreateServerTLSConfig("", "", []string{"localhost", "datadog-demo"})
 		if err != nil {
 			log.Fatalf("Could not generate TLS config: %v\n", err)
 		}

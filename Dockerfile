@@ -11,7 +11,7 @@ COPY *.png ./
 COPY *.js ./
 COPY *.ico ./
 COPY *.css ./
-COPY --from=build /go/src/app/rollouts-demo /rollouts-demo
+COPY --from=build /go/src/app/datadog-demo /datadog-demo
 
 ARG COLOR
 ENV COLOR=${COLOR}
@@ -20,4 +20,4 @@ ENV ERROR_RATE=${ERROR_RATE}
 ARG LATENCY
 ENV LATENCY=${LATENCY}
 
-ENTRYPOINT [ "/rollouts-demo" ]
+ENTRYPOINT [ "/datadog-demo" ]

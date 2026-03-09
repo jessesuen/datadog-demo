@@ -38,7 +38,7 @@ image:
 		--build-arg ERROR_RATE=${ERROR_RATE} \
 		--build-arg LATENCY=${LATENCY} \
 		${DOCKER_BUILD_OPTS} \
-		-t $(IMAGE_PREFIX)rollouts-demo:${IMAGE_TAG} .
+		-t $(IMAGE_PREFIX)datadog-demo:${IMAGE_TAG} .
 
 .PHONY: load-tester-image
 load-tester-image:
@@ -60,4 +60,4 @@ release:
 
 .PHONY: clean
 clean:
-	rm -f rollouts-demo
+	rm -f datadog-demo
