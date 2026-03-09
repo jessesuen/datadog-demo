@@ -1,4 +1,4 @@
-COLOR?=
+COLOR ?= $(shell cat COLOR)
 IMAGE_NAMESPACE?=
 ERROR_RATE?=
 IMAGE_TAG?=latest
@@ -39,12 +39,6 @@ image:
 		--build-arg LATENCY=${LATENCY} \
 		${DOCKER_BUILD_OPTS} \
 		-t $(IMAGE_PREFIX)datadog-demo:${IMAGE_TAG} .
-
-.PHONY: load-tester-image
-load-tester-image:
-	cd load-tester
-	docker build -t $(IMAGE_PREFIX)load-tester:latest load-tester
-	@if [ "$(DOCKER_PUSH)" = "true" ] ; then docker push $(IMAGE_PREFIX)load-tester:latest ; fi
 
 .PHONY: run
 run:
