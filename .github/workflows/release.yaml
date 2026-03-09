@@ -39,6 +39,10 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
 
+      - name: Read COLOR file
+        id: color
+        run: echo "value=$(cat COLOR)" >> $GITHUB_OUTPUT
+
       - name: Build and push
         uses: docker/build-push-action@v7
         with:
@@ -48,5 +52,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           annotations: ${{ steps.meta.outputs.annotations }}
+          build-args: COLOR=${{ steps.color.outputs.value }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
