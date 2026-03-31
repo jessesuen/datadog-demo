@@ -41,9 +41,11 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
 
-      - name: Read COLOR file
-        id: color
-        run: echo "value=$(cat COLOR)" >> $GITHUB_OUTPUT
+      - name: Read build arguments
+        id: build-args
+        run: |
+          echo "color=$(cat COLOR)" >> $GITHUB_OUTPUT
+          echo "error_rate=$(cat ERROR_RATE 2>/dev/null || echo 0)" >> $GITHUB_OUTPUT
 
       - name: Build and push
         uses: docker/build-push-action@v7
@@ -54,6 +56,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           annotations: ${{ steps.meta.outputs.annotations }}
-          build-args: COLOR=${{ steps.color.outputs.value }}
+          build-args: |
+            COLOR=${{ steps.build-args.outputs.color }}
+            ERROR_RATE=${{ steps.build-args.outputs.error_rate }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
