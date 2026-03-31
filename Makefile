@@ -1,6 +1,6 @@
 COLOR ?= $(shell cat COLOR)
 IMAGE_NAMESPACE?=
-ERROR_RATE?=
+ERROR_RATE ?= $(shell cat ERROR_RATE)
 IMAGE_TAG?=latest
 
 ifneq (${COLOR},)
